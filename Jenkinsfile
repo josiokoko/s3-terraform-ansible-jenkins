@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         PATH = "${PATH}:${getTerraformPath()}"
-        PATH = "${PATH}:${getAnsible()}"
     }
 
     stages{
