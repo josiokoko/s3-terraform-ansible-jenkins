@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         PATH = "${PATH}:${getTerraformPath()}"
+        PATH = "${PATH}:${getAnsible()}"
     }
 
     stages{
@@ -38,6 +39,12 @@ pipeline {
 def getTerraformPath(){
     def tfHome = tool name: 'terraform1.2', type: 'terraform'
     return tfHome
+}
+
+
+def getAnsible(){
+    def ansibleHome = tool name: 'ansible1.2 ', type: 'org.jenkinsci.plugins.ansible.AnsibleInstallation'
+    return ansibleHome
 }
 
 
