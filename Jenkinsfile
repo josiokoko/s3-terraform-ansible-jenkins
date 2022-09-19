@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     def ansibleHome = tool name: 'ansible2', type: 'org.jenkinsci.plugins.ansible.AnsibleInstallation'
-                    env.PATH = "${ansibleHome}:${env.PATH}"
+                    env.PATH = "${env.PATH}:${ansibleHome}"
                     sh 'ansible --version'
                 }
             }
