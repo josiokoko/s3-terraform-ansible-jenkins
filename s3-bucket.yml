@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Create s3 Bucket
+      s3_bucket:
+        name: joe-terraform-09-09
+        state: present
+      

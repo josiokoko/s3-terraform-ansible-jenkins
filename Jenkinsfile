@@ -9,9 +9,7 @@ pipeline {
 
         stage('s3 Create Bucket'){
             steps{
-                script{
-                    createS3Bucket('joe-terraform-09-09')
-                }
+                sh "ansible-playbook s3-bucket.yml"
             }
         }
 
@@ -19,30 +17,16 @@ pipeline {
             steps{
                 sh returnStatus: true, script: 'terraform workspace new dev'
                 sh "terraform init"
-                sh "terraform apply -auto-approve -var-file=dev.tfvars"
+                sh "ansible-playbook terraform.yml"
             }
         }
 
-        stage('Dev - destroy'){
-            steps{
-                sh returnStatus: true, script: 'terraform workspace new dev'
-                sh "terraform destroy -auto-approve"
-            }
-        }
 
         stage('Prod - init and apply'){
             steps{
                 sh returnStatus: true, script: 'terraform workspace new prod'
                 sh "terraform init"
-                sh "terraform apply -auto-approve -var-file=prod.tfvars"
-            }
-        }
-
-
-        stage('Prod - destroy'){
-            steps{
-                sh returnStatus: true, script: 'terraform workspace new prod'
-                sh "terraform destroy -auto-approve"
+                sh "ansible-playbook terraform.yml -e app_env=prod"
             }
         }
 
@@ -54,9 +38,4 @@ pipeline {
 def getTerraformPath(){
     def tfHome = tool name: 'terraform1.2', type: 'terraform'
     return tfHome
-}
-
-
-def createS3Bucket(bucketName){
-    sh returnStatus: true, script: "aws s3 mb ${bucketName} --region=us-east-1"
 }
