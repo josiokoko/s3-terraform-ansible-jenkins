@@ -40,11 +40,3 @@ def getTerraformPath(){
     return tfHome
 }
 
-
-def getAnsible(){
-    def ansibleHome = tool name: 'ansible1.2 ', type: 'org.jenkinsci.plugins.ansible.AnsibleInstallation'
-    return ansibleHome
-}
-
-
-
