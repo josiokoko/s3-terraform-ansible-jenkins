@@ -7,19 +7,10 @@ pipeline {
 
     stages{
 
-        stage('Ansible Init') {
-            steps {
-                script {
-                    def ansibleHome = tool name: 'ansible2', type: 'org.jenkinsci.plugins.ansible.AnsibleInstallation'
-                    env.PATH = "${env.PATH}:${ansibleHome}"
-                    sh 'ansible --version'
-                }
-            }
-        }
-
         stage('s3 Create Bucket'){
             steps{
-                sh 'ansible-playbook s3-bucket.yml'
+                // sh 'ansible-playbook s3-bucket.yml'
+                ansiblePlaybook installation: 'ansible2', playbook: 's3-bucket.yml'
             }
         }
 
