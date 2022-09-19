@@ -9,9 +9,7 @@ pipeline {
 
         stage('s3 Create Bucket'){
             steps{
-                def ansHome = tool name: 'ansible2', type: 'org.jenkinsci.plugins.ansible.AnsibleInstallation'
-                // sh 'ansible-playbook s3-bucket.yml'
-                ansiblePlaybook installation: "${ansHome}", playbook: 's3-bucket.yml'
+                sh "ansible-playbook s3-bucket.yml"
             }
         }
 
